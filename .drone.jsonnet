@@ -14,6 +14,13 @@ local pipeline(title, name) = {
   },
   steps: [
     {
+      name: 'validate parameters',
+      image: config.images.aws_cli,
+      commands: [
+        '[ "x${INSTANCE}" == "x" ] && echo "INSTANCE param not set" && exit 1',
+      ],
+    },
+    {
       //local environment = config.environments[ename],
       name: 'deploy to ' + build_param('INSTANCE'),
       pull: 'if-not-exists',
