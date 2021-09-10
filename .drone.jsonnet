@@ -1,7 +1,6 @@
 local config = import '.libsonnet/config.libsonnet';
 local build_param(name) = std.native('buildParam')(name);
 
-
 local pipeline(title, name) = {
   kind: 'pipeline',
   type: 'kubernetes',
@@ -9,9 +8,6 @@ local pipeline(title, name) = {
   trigger: {
     event: ['promote'],
     target: [name],
-    requires: {
-      INSTANCE: build_param('INSTANCE'),
-    },
   },
   steps: [
     {
