@@ -1,9 +1,6 @@
 local config = import '.libsonnet/config.libsonnet';
 
-
-local fn = {
-  build_param(name):: std.native('buildParam')(name),
-};
+local build_param(name) = std.native('buildParam')(name),
 
 local pipeline(title, name) = {
   kind: 'pipeline',
