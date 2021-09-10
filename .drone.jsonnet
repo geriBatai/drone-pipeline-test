@@ -22,6 +22,5 @@ local pipeline(title, name) = {
 };
 
 [
-
- pipeline('deploy to dev', 'dev');
+  pipeline('deploy to dev', 'dev'),
 ]
