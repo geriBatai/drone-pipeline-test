@@ -12,7 +12,7 @@ local pipeline(title, name) = {
   },
   steps: [
     //local environment = config.environments[ename],
-    name: 'deploy to ' + fn.build_param('INSTANCE'),
+    name: 'deploy to ' + build_param('INSTANCE'),
     pull: 'if-not-exists',
     image: config.images.aws_cli,
     commands: [
