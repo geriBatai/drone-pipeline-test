@@ -1,6 +1,7 @@
 local config = import '.libsonnet/config.libsonnet';
 local build_param(name) = std.native('buildParam')(name);
 
+
 local pipeline(title, name) = {
   kind: 'pipeline',
   type: 'kubernetes',
