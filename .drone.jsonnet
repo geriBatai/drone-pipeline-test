@@ -8,6 +8,9 @@ local pipeline(title, name) = {
   trigger: {
     event: ['promote'],
     target: [name],
+    requires: {
+      INSTANCE: build_param('INSTANCE'),
+    },
   },
   steps: [
     {
