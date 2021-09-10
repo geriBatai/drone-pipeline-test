@@ -14,7 +14,7 @@ local pipeline(title, name) = {
       name: 'validate parameters',
       image: config.images.aws_cli,
       commands: [
-        '[ "x${INSTANCE}" == "x" ] && echo "INSTANCE param not set" && exit 1',
+        './validate-params.sh INSTANCE $INSTANCE',
       ],
     },
     {
