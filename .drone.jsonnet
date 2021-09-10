@@ -9,13 +9,15 @@ local pipeline(title, name) = {
     target: [name],
   },
   steps: [
-    //local environment = config.environments[ename],
-    name: 'deploy to ' + build_param('INSTANCE'),
-    pull: 'if-not-exists',
-    image: config.images.aws_cli,
-    commands: [
-      'echo "hello world"',
-    ],
+    {
+      //local environment = config.environments[ename],
+      name: 'deploy to ' + build_param('INSTANCE'),
+      pull: 'if-not-exists',
+      image: config.images.aws_cli,
+      commands: [
+        'echo "hello world"',
+      ],
+    },
   ],
 };
 
