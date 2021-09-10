@@ -35,6 +35,11 @@ local pipeline(title, name) = {
     kind: 'pipeline',
     type: 'kubernetes',
     name: 'default',
+    trigger: {
+      event: {
+        exclude: ['promote'],
+      },
+    },
   },
   pipeline('deploy to dev', 'dev'),
 ]
