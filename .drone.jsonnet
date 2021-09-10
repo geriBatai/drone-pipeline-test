@@ -23,5 +23,10 @@ local pipeline(title, name) = {
 };
 
 [
+  {
+    kind: 'pipeline',
+    type: 'kubernetes',
+    name: 'default',
+  },
   pipeline('deploy to dev', 'dev'),
 ]
