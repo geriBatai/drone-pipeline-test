@@ -38,7 +38,7 @@ local deploy = {
         },
       ],
   },
-  to_kubernetes(name, path):: {
+  to_kubernetes(name):: {
     local environment = config[name],
     local service = fn.build_param('SERVICE'),
     local versions = fn.parse_yaml(environment.path + '/versions.yml'),
@@ -87,7 +87,7 @@ local deploy = {
   },
   deploy.to_host('deploy to dev', 'dev', 'hft1'),
   deploy.to_host('deploy to uat', 'uat', null),
-  deploy.to_kubernetes('kubedev', 'dev'),
+  deploy.to_kubernetes('kubedev'),
   //deploy.to_kubernetes('deploy to kubernetes uat', 'kubeuat', 'uat'),
   //deploy.to_kubernetes('deploy to kubernetes prod', 'kubeprod', 'prod'),
   //deploy.to_kubernetes('deploy to kubernetes prod (tokyo)', 'kubeprod-tok', 'prod'),
