@@ -1,0 +1,3 @@
+regina:
+  kubernetes:
+    my_service: 0.0.1

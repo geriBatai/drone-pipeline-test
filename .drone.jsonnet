@@ -4,8 +4,6 @@ local fn = {
   parse_yaml(filename):: std.native('parseYaml')(filename),
 };
 
-//local build_param(name) = name;
-
 local deploy = {
   to_host(title, name, instance):: {
     local deploy_to = if std.isString(instance) then instance else fn.build_param('INSTANCE'),
@@ -44,6 +42,7 @@ local deploy = {
     local service = fn.build_param('SERVICE'),
     local versions = fn.parse_yaml(path + '/versions.yml'),
     local version = versions.regina.kubernetes[service],
+    local environment = config[name],
     kind: 'pipeline',
     type: 'kubernetes',
     name: title,
@@ -55,10 +54,19 @@ local deploy = {
     },
     steps: [
       {
-        name: 'deploy ' + service + ' (' + version + ')',
+        name: 'deploy ' + service,
         pull: 'if-not-exists',
         image: config.images.kubectl,
-        commands: [],
+        commands: [
+          'TAG=$(yq r ' + environment.name + '/versions.yml regina kubernetes.$SERVICE',
+          'if [[ "${TAG}" =~ ".*:.*" ]]; then SERVICE_TAG=${TAG}; else SERVICE_TAG=${SERVICE}:${TAG}; fi',
+          'echo ${SERVICE_TAG}',
+          //'if [ -d kubernetes/$SERVICE/overlays/' + environment.name + ' ]; then cd kubernetes/$SERVICE/overlays/' + environment + '; else cd kubernetes/$SERVICE/base; fi',
+          //'kustomize edit set image ' + config.images.regina_base,
+          //'aws eks update-kubeconfig --name ' + config.environments[name].awsAccount,
+          //'SENTRY_RELEASE_TAG=$TAG kubectl apply -k .',
+          //'kubectl -n ' + environment + ' rollout status --timeout=15m deployment/$SERVICE',
+        ],
       },
     ],
 
