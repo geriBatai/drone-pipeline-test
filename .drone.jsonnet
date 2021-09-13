@@ -1,7 +1,12 @@
+local services = [
+  { name: 'service-one' },
+];
+
 local config = import '.libsonnet/config.libsonnet';
 local build_param(name) = std.native('buildParam')(name);
 
-local pipeline(title, name) = {
+local deploy_to_host(title, name, instance) = {
+  local deploy_to = [ if instance then instance else build_param('INSTANCE') ];
   kind: 'pipeline',
   type: 'kubernetes',
   name: title,
@@ -19,12 +24,17 @@ local pipeline(title, name) = {
     },
     {
       //local environment = config.environments[ename],
-      name: 'deploy to ' + build_param('INSTANCE'),
+      name: 'deploy to ' + deploy_to,
       pull: 'if-not-exists',
       image: config.images.aws_cli,
       commands: [
         'echo "hello world"',
       ],
+      when: {
+        params: {
+          INSTANCE: build_param('INSTANCE'),
+        },
+      },
     },
   ],
 };
@@ -41,5 +51,5 @@ local pipeline(title, name) = {
       },
     },
   },
-  pipeline('deploy to dev', 'dev'),
+  deploy_to_host('deploy to dev', 'dev', 'hft1'),
 ]
