@@ -1,7 +1,6 @@
 local config = import '.libsonnet/config.libsonnet';
 local fn = {
   build_param(name):: std.native('buildParam')(name),
-  parse_yaml(filename):: std.native('parseYaml')(filename),
 };
 
 local deploy = {
@@ -41,8 +40,6 @@ local deploy = {
   to_kubernetes(name):: {
     local environment = config.environments[name],
     local service = fn.build_param('SERVICE'),
-    local versions = fn.parse_yaml(environment.path + '/versions.yml'),
-    local version = if std.isString(versions.regina.kubernetes[service]) then versions.regina.kubernetes[service] else '',
     kind: 'pipeline',
     type: 'kubernetes',
     name: environment.title,
@@ -54,7 +51,7 @@ local deploy = {
     },
     steps: [
       {
-        name: 'deploy ' + service + ' (' + version + ')',
+        name: 'deploy ' + service,
         pull: 'if-not-exists',
         image: config.images.kubectl,
         commands: [
