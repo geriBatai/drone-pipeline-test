@@ -42,10 +42,10 @@ local deploy = {
     local environment = config[name],
     local service = fn.build_param('SERVICE'),
     local versions = fn.parse_yaml(environment.path + '/versions.yml'),
-    local version = versions.regina.kubernetes[service],
+    local version = if std.isString(versions.regina.kubernetes[service] else '',
     kind: 'pipeline',
     type: 'kubernetes',
-    name: title,
+    name: environment.title,
     trigger: {
       event: ['promote'],
       params: {
