@@ -1,7 +1,7 @@
 local config = import '.libsonnet/config.libsonnet';
 local fn = {
   build_param(name):: std.native('buildParam')(name),
-  parse_yaml(filename):: std.native('parseYaml')(name),
+  parse_yaml(filename):: std.native('parseYaml')(filename),
 };
 
 //local build_param(name) = name;
