@@ -42,7 +42,7 @@ local deploy = {
   },
   to_kubernetes(title, name, path):: {
     local service = fn.build_param('SERVICE'),
-    local versions = fn.parse_yaml(path + '/versions.yml')
+    local versions = fn.parse_yaml(path + '/versions.yml'),
     local version = versions.regina.kubernetes[service],
     kind: 'pipeline',
     type: 'kubernetes',
