@@ -1,7 +1,3 @@
-local services = [
-  { name: 'service-one' },
-];
-
 local config = import '.libsonnet/config.libsonnet';
 //local build_param(name) = std.native('buildParam')(name);
 local build_param(name) = name;
@@ -41,17 +37,18 @@ local deploy_to_host(title, name, instance) = {
 };
 
 
-[
-  {
-    kind: 'pipeline',
-    type: 'kubernetes',
-    name: 'default',
-    trigger: {
-      event: {
-        exclude: ['promote'],
-      },
+//[
+{
+  kind: 'pipeline',
+  type: 'kubernetes',
+  name: 'default',
+  trigger: {
+    event: {
+      exclude: ['promote'],
     },
   },
-  //deploy_to_host('deploy to dev', 'dev', 'hft1'),
-  //deploy_to_host('deploy to uat', 'uat', null),
-]
+}
+//deploy_to_host('deploy to dev', 'dev', 'hft1'),
+//deploy_to_host('deploy to uat', 'uat', null),
+//]
+
