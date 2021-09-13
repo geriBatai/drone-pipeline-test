@@ -39,7 +39,7 @@ local deploy = {
       ],
   },
   to_kubernetes(name):: {
-    local environment = config[name],
+    local environment = config.environments[name],
     local service = fn.build_param('SERVICE'),
     local versions = fn.parse_yaml(environment.path + '/versions.yml'),
     local version = if std.isString(versions.regina.kubernetes[service]) then versions.regina.kubernetes[service] else '',
