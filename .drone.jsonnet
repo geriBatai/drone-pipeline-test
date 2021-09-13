@@ -38,11 +38,11 @@ local deploy = {
         },
       ],
   },
-  to_kubernetes(title, name, path):: {
-    local service = fn.build_param('SERVICE'),
-    local versions = fn.parse_yaml(path + '/versions.yml'),
-    local version = versions.regina.kubernetes[service],
+  to_kubernetes(name, path):: {
     local environment = config[name],
+    local service = fn.build_param('SERVICE'),
+    local versions = fn.parse_yaml(environment.path + '/versions.yml'),
+    local version = versions.regina.kubernetes[service],
     kind: 'pipeline',
     type: 'kubernetes',
     name: title,
@@ -54,7 +54,7 @@ local deploy = {
     },
     steps: [
       {
-        name: 'deploy ' + service,
+        name: 'deploy ' + service + ' (' + version + ')',
         pull: 'if-not-exists',
         image: config.images.kubectl,
         commands: [
@@ -87,8 +87,8 @@ local deploy = {
   },
   deploy.to_host('deploy to dev', 'dev', 'hft1'),
   deploy.to_host('deploy to uat', 'uat', null),
-  deploy.to_kubernetes('deploy to kubernetes dev', 'kubedev', 'dev'),
-  deploy.to_kubernetes('deploy to kubernetes uat', 'kubeuat', 'uat'),
-  deploy.to_kubernetes('deploy to kubernetes prod', 'kubeprod', 'prod'),
-  deploy.to_kubernetes('deploy to kubernetes prod (tokyo)', 'kubeprod-tok', 'prod'),
+  deploy.to_kubernetes('kubedev', 'dev'),
+  //deploy.to_kubernetes('deploy to kubernetes uat', 'kubeuat', 'uat'),
+  //deploy.to_kubernetes('deploy to kubernetes prod', 'kubeprod', 'prod'),
+  //deploy.to_kubernetes('deploy to kubernetes prod (tokyo)', 'kubeprod-tok', 'prod'),
 ]
