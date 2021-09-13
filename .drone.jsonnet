@@ -63,7 +63,7 @@ local deploy = {
         pull: 'if-not-exists',
         image: config.images.kubectl,
         commands: [
-          'TAG=$(yq r ' + environment.path + '/versions.yml regina kubernetes.$SERVICE)',
+          'TAG=$(yq r ' + environment.path + '/versions.yml regina.kubernetes.$SERVICE)',
           'if [[ "${TAG}" == *":"* ]]; then SERVICE_TAG=${TAG}; else SERVICE_TAG=${SERVICE}:${TAG}; fi',
           'echo ${SERVICE_TAG}',
           //'if [ -d kubernetes/$SERVICE/overlays/' + environment.path + ' ]; then cd kubernetes/$SERVICE/overlays/' + environment.path + '; else cd kubernetes/$SERVICE/base; fi',
